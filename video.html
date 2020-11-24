@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<!-- 内部样式 -->
+<style>
+    p{
+        width:400px;
+        height:400px;
+        position: absolute;
+        top:50%;
+        left:50%;
+        transform:translate(-50%,-50%);
+        margin: 0px;
+        background-color: red;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        
+    }
+    span{
+        display: inline-block;
+        cursor: pointer;
+
+    }
+    section{
+        width: 960px;
+        height: 544px;
+        position: relative;
+       
+    }
+   body{
+       margin: 0px;
+   }
+</style>
+<body>
+    <section>
+         <!-- poster：插入封面图片   -->
+        <video src="./Portrait of woman with glossy lips applying cream创意视频素材_VCG42N1057212040 - VCG.COM.mp4" poster="./轮回眼.gif" ></video>
+        <input type="button" value="Play" class="begin">  
+        <input type="button" value="mute">
+        <input type="button" value="Slow Down">
+        <input type="button" value="Speed Up">
+        <input type="button" value="2play">
+        <input type="button" value="Skip Ahead">
+        <input type="button" value="qpplay">
+        <p>
+            这是一个广告
+            <span>
+                X
+            </span>
+        </p>
+    </section>
+
+    <script src="./高级.js"></script>
+</body>
+<script>
+
+let vide=document.getElementsByTagName("video")[0];
+
+// // Play
+let begin=document.getElementsByClassName("begin")[0];
+// begin.addEventListener("click",function(e){
+//   if(this.value=="Play"){
+//       this.value="Pause";
+//     //   Play
+//       vide.play();
+//   }else if (this.value=="Pause"){
+//     this.value="Play";
+//     // Pause
+//     vide.pause();
+//   }
+// })
+
+let louder=document.querySelector(`input[value="mute"]`);
+louder.addEventListener("click",function(e){
+    // 设置视频Play声音（取值0-1；0是mute，1是最大声音）
+    if(this.value=="mute"){
+        this.value="取消mute";
+      //   Play
+      vide.volume=0;
+    }else if( this.value=="取消mute"){
+        this.value="mute"
+      // Pause
+      vide.volume=1;
+    }
+})
+
+
+// 获取当前Play的时间的（快进后退）
+let quickly=document.querySelector(`input[value="Speed Up"]`);
+quickly.addEventListener("click",function(e){
+    vide.currentTime+=5;
+})
+
+// 后退
+let slowly=document.querySelector(`input[value="Slow Down"]`);
+slowly.addEventListener("click",function(e){
+    // currentTime：当前Play的时间
+    vide.currentTime-=5;
+})
+
+// 倍速Play(0.1-16)
+let fast2=document.querySelector(`input[value="2play"]`);
+fast2.addEventListener("click",function(e){
+    // currentTime：当前Play的时间
+    vide.playbackRate=2;
+})
+
+// 倍速Play
+let slower=document.querySelector(`input[value="Skip Ahead"]`);
+slower.addEventListener("click",function(e){
+    // currentTime：当前Play的时间
+    vide.playbackRate=0.5;
+})
+
+// Pause出现广告，关闭广告继续Play
+// 获取广告节点
+let pEle=document.getElementsByTagName("p")[0];
+let turnOff=document.getElementsByTagName("span")[0];
+pEle.style.display="none"
+
+begin.addEventListener("click",function(e){
+  if(this.value=="Play"){
+      this.value="Pause";
+    //   Play
+      vide.play();
+      pEle.style.display="none"
+  }else if (this.value=="Pause"){
+    this.value="Play";
+    // Pause
+    vide.pause();
+    pEle.style.display="block"
+    pEle.style.display="flex";
+    pEle.style.justifyContent="center";
+    pEle.style.alignItems="center";
+  }
+})
+
+turnOff.addEventListener("click",function(e){
+    pEle.style.display="none"
+    vide.play();
+    begin.value="Pause"
+  })
+
+  // qpplay功能
+  let showbig=document.querySelector(`input[value="qpplay"]`);
+  showbig.addEventListener("click", function() {
+    launchFullscreen(vide);
+    // v1.webkitRequestFullscreen(); //谷歌浏览器全屏
+});
+//解决浏览器兼容性
+function launchFullscreen(element) {
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen();
+    } else if (element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+    }
+}
+</script>
+</html>
